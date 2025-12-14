@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Chatbot</title>
+<style>
+body {
+    font-family: Arial, sans-serif;
+}
+#chatbot {
+    width: 320px;
+    height: 420px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+}
+#header {
+    background: #4CAF50;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    border-radius: 10px 10px 0 0;
+}
+#messages {
+    flex: 1;
+    padding: 10px;
+    overflow-y: auto;
+    background: #f2f2f2;
+}
+.msg {
+    margin-bottom: 8px;
+}
+.user {
+    text-align: right;
+    color: blue;
+}
+.bot {
+    text-align: left;
+    color: green;
+}
+#input {
+    display: flex;
+}
+#input input {
+    flex: 1;
+    padding: 8px;
+    border: none;
+    border-top: 1px solid #ccc;
+}
+#input button {
+    padding: 8px;
+    background: #4CAF50;
+    color: white;
+    border: none;
+}
+</style>
+</head>
+<body>
+
+<div id="chatbot">
+    <div id="header">🤖 Chat hỗ trợ</div>
+    <div id="messages"></div>
+    <div id="input">
+        <input type="text" id="userInput" placeholder="Nhập câu hỏi...">
+        <button onclick="sendMessage()">Gửi</button>
+    </div>
+</div>
+
+<script>
+function sendMessage() {
+    let input = document.getElementById("userInput");
+    let text = input.value.trim();
+    if (text === "") return;
+
+    addMessage(text, "user");
+    input.value = "";
+
+    setTimeout(() => {
+        addMessage(botReply(text), "bot");
+    }, 400);
+}
+
+function addMessage(text, sender) {
+    let messages = document.getElementById("messages");
+    let div = document.createElement("div");
+    div.className = "msg " + sender;
+    div.innerText = text;
+    messages.appendChild(div);
+    messages.scrollTop = messages.scrollHeight;
+}
+
+function botReply(msg) {
+    msg = msg.toLowerCase();
+
+    if (msg.includes("xin chào") || msg.includes("chào")) {
+        return "Xin chào 👋 Mình có thể giúp gì cho bạn?";
+    }
+
+    if (msg.includes("giờ làm việc")) {
+        return "Giờ làm việc: Thứ 2 – Thứ 6, 8h – 17h.";
+    }
+
+    if (msg.includes("giá") || msg.includes("bao nhiêu")) {
+        return "Bạn vui lòng xem bảng giá trong mục Dịch vụ nhé.";
+    }
+
+    if (msg.includes("liên hệ")) {
+        return "Bạn có thể liên hệ: 📞 0909 123 456 hoặc ✉️ email@gmail.com";
+    }
+
+    if (msg.includes("địa chỉ")) {
+        return "Địa chỉ: PBC Di Linh.";
+    }
+
+    return "Xin lỗi 😥 mình chưa hiểu câu hỏi. Bạn có thể hỏi lại rõ hơn không?";
+}
+</script>
+
+</body>
+</html>
